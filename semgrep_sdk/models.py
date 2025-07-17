@@ -5,7 +5,10 @@ Pydantic models for Semgrep API data structures.
 from datetime import datetime
 from enum import Enum
 from typing import List, Optional, Dict, Any, Union
-from pydantic import BaseModel, Field, validator, HttpUrl
+try:
+    from pydantic import BaseModel, Field, validator, HttpUrl
+except ImportError:
+    raise ImportError("pydantic library is required. Install with: pip install pydantic")
 
 
 class ScanStatus(str, Enum):

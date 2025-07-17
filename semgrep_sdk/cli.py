@@ -7,17 +7,34 @@ import os
 import sys
 from typing import Optional
 
-import click
-from rich.console import Console
-from rich.table import Table
-from rich.progress import Progress, SpinnerColumn, TextColumn
-from rich.panel import Panel
-from rich.text import Text
-from tabulate import tabulate
+try:
+    import click
+except ImportError:
+    click = None
+
+try:
+    from rich.console import Console
+    from rich.table import Table
+    from rich.progress import Progress, SpinnerColumn, TextColumn
+    from rich.panel import Panel
+    from rich.text import Text
+except ImportError:
+    Console = Table = Progress = SpinnerColumn = TextColumn = Panel = Text = None
+
+try:
+    from tabulate import tabulate
+except ImportError:
+    tabulate = None
 
 from .client import SemgrepClient
 from .exceptions import SemgrepError, AuthenticationError
 from .models import ScanStatus, FindingSeverity
+
+# Check for required dependencies
+if click is None:
+    raise ImportError("click library is required for CLI. Install with: pip install click")
+if Console is None:
+    raise ImportError("rich library is required for CLI. Install with: pip install rich")
 
 console = Console()
 

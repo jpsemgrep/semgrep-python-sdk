@@ -13,8 +13,57 @@ A comprehensive Python SDK for the Semgrep API that makes it easy to interact wi
 
 ## Installation
 
+This SDK is not available on PyPI yet. You have two options to use it:
+
+### Option 1: Install from Local Directory (Recommended)
+
+1. **Clone or download this repository**:
+   ```bash
+   git clone https://github.com/YOUR_USERNAME/semgrep-python-sdk.git
+   cd semgrep-python-sdk
+   ```
+
+2. **Install using the automated script** (easiest):
+   ```bash
+   python install.py
+   ```
+
+3. **OR install manually**:
+   ```bash
+   # Install dependencies first
+   pip install -r requirements.txt
+   
+   # Install the package in development mode (recommended)
+   pip install -e .
+   
+   # OR install normally
+   pip install .
+   ```
+
+### Option 2: Install Dependencies Only
+
+If you want to use the code directly without installing the package:
+
+1. **Clone or download this repository**
+2. **Install only the required dependencies**:
+   ```bash
+   pip install requests pydantic typing-extensions python-dateutil click rich tabulate aiohttp
+   ```
+3. **Use the modules directly**:
+   ```python
+   from semgrep_sdk.client import SemgrepClient
+   from semgrep_sdk.models import ScanConfig
+   ```
+
+### Note
+- This package is **NOT** available on PyPI (pip install semgrep-sdk won't work)
+- You must have the source code locally to use this SDK
+- The package will only be available in your local environment, not globally
+
+### Verify Installation
+After installation, you can test that everything works:
 ```bash
-pip install semgrep-sdk
+python test_installation.py
 ```
 
 ## Quick Start
@@ -243,6 +292,29 @@ except Exception as e:
 ## License
 
 MIT License - see LICENSE file for details.
+
+## Troubleshooting
+
+### Import Errors
+If you see import errors like "No module named 'requests'" or "No module named 'pydantic'", you need to install the dependencies:
+
+```bash
+pip install -r requirements.txt
+```
+
+### CLI Not Working
+If the CLI commands don't work, make sure you have the required dependencies:
+
+```bash
+pip install click rich tabulate
+```
+
+### Authentication Errors
+Make sure you have set your Semgrep API token:
+
+```bash
+export SEMGREP_API_TOKEN="your-api-token"
+```
 
 ## Support
 

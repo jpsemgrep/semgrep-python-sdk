@@ -8,9 +8,20 @@ import os
 from typing import List, Optional, Dict, Any, Union
 from urllib.parse import urljoin, urlencode
 
-import aiohttp
-import requests
-from pydantic import ValidationError
+try:
+    import aiohttp
+except ImportError:
+    aiohttp = None
+
+try:
+    import requests
+except ImportError:
+    requests = None
+
+try:
+    from pydantic import ValidationError
+except ImportError:
+    ValidationError = Exception
 
 from .exceptions import (
     SemgrepError,
@@ -101,6 +112,8 @@ class SemgrepClient(BaseClient):
     
     def __init__(self, **kwargs):
         super().__init__(**kwargs)
+        if requests is None:
+            raise ImportError("requests library is required. Install with: pip install requests")
         self.session = requests.Session()
         self.session.headers.update(self._get_headers())
     
@@ -313,6 +326,8 @@ class AsyncSemgrepClient(BaseClient):
     
     async def __aenter__(self):
         """Async context manager entry."""
+        if aiohttp is None:
+            raise ImportError("aiohttp library is required. Install with: pip install aiohttp")
         self.session = aiohttp.ClientSession(
             headers=self._get_headers(),
             timeout=aiohttp.ClientTimeout(total=self.timeout),
